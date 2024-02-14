@@ -23,9 +23,6 @@ $(foreach obj, $(OBJS), $(eval $(call OBJ_template,$(obj),$(obj:obj/%.o=src/%.cp
 
 
 all: pre-build $(TARGET)
-	mv $(TARGET) bin/$(TARGET)
-
-
 
 pre-build:
 	- @mkdir -p $(OBJDIRS) 2>/dev/null
@@ -38,7 +35,7 @@ $(TARGET): $(OBJS)
 
 
 clean:
-	rm -rf obj/* bin/*
+	rm -rf obj/* $(TARGET) 
 
 
 
