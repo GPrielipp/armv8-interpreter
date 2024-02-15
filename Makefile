@@ -1,11 +1,14 @@
 CXX=clang++
 CXXFLAGS=-g -Wall
 
-SRCS=$(shell find src/ -type f -name *.cpp)
-OBJS=$(SRCS:src/%.cpp=obj/%.o)
+SRCDIR=src
+OBJDIR=obj
 
-SRCDIRS=$(patsubst src/%, %, $(shell find src/ -type d))
-OBJDIRS=$(SRCDIRS:%=obj/%)
+SRCS=$(shell find $(SRCDIR)/ -type f -name *.cpp)
+OBJS=$(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+
+SRCDIRS=$(patsubst $(SRCDIR)/%, %, $(shell find $(SRCDIR)/ -type d))
+OBJDIRS=$(SRCDIRS:%=$(OBJDIR)/%)
 
 TARGET=vm
 
@@ -22,7 +25,7 @@ $(1): $(2)
 	@echo ""
 endef
 
-$(foreach obj, $(OBJS), $(eval $(call OBJ_template,$(obj),$(obj:obj/%.o=src/%.cpp)) ))
+$(foreach obj, $(OBJS), $(eval $(call OBJ_template,$(obj),$(obj:$(OBJDIR)/%.o=$(SRCDIR)/%.cpp)) ))
 
 
 
@@ -39,7 +42,7 @@ $(TARGET): $(OBJS)
 
 
 clean:
-	rm -rf obj/* $(TARGET) 
+	rm -rf $(OBJDIR)/* $(TARGET) 
 
 
 
