@@ -11,18 +11,20 @@ TARGET=vm
 
 
 
+all: pre-build $(TARGET)
+
+
+
 define OBJ_template =
 $(1): $(2) 
-	@echo ""
 	@echo "Building $$@"
 	$$(CXX) $$(CXXFLAGS) -c $$^ -o $$@ -MMD
+	@echo ""
 endef
 
 $(foreach obj, $(OBJS), $(eval $(call OBJ_template,$(obj),$(obj:obj/%.o=src/%.cpp)) ))
 
 
-
-all: pre-build $(TARGET)
 
 pre-build:
 	- @mkdir -p $(OBJDIRS) 2>/dev/null
@@ -30,7 +32,9 @@ pre-build:
 
 
 $(TARGET): $(OBJS)
+	@echo "Building $(TARGET)"
 	$(CXX) $(CXXFLAGS) $^ -o $@ 
+	@echo ""
 
 
 
@@ -43,5 +47,5 @@ run: pre-build $(TARGET)
 	@echo
 	./$(TARGET)
 
-.phony: pre-build all
+.phony: pre-build 
 
