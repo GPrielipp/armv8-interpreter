@@ -3,6 +3,7 @@ CXXFLAGS=-g -Wall
 
 SRCDIR=src
 OBJDIR=obj
+INCDIR=inc
 
 SRCS=$(shell find $(SRCDIR)/ -type f -name *.cpp)
 OBJS=$(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
@@ -19,13 +20,13 @@ all: pre-build $(TARGET)
 
 
 define OBJ_template =
-$(1): $(2) 
+$(1): $(2) $(3) 
 	@echo "Building $$@"
-	$$(CXX) $$(CXXFLAGS) -c $$^ -o $$@ -MMD
+	$$(CXX) $$(CXXFLAGS) -c $$< -o $$@ -MMD
 	@echo ""
 endef
 
-$(foreach obj, $(OBJS), $(eval $(call OBJ_template,$(obj),$(obj:$(OBJDIR)/%.o=$(SRCDIR)/%.cpp)) ))
+$(foreach obj, $(OBJS), $(eval $(call OBJ_template,$(obj),$(obj:$(OBJDIR)/%.o=$(SRCDIR)/%.cpp),$(obj:$(OBJDIR)/%.o=$(INCDIR)/%.h)) ))
 
 
 
