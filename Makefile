@@ -5,6 +5,7 @@ SRCDIR=src
 OBJDIR=obj
 INCDIR=inc
 
+DRIVER=main.cpp
 SRCS=$(shell find $(SRCDIR)/ -type f -name *.cpp)
 OBJS=$(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
@@ -35,9 +36,10 @@ pre-build:
 
 
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS) $(DRIVER)
 	@echo "Building $(TARGET)"
 	$(CXX) $(CXXFLAGS) $^ -o $@ 
+	@chmod 0500 $@
 	@echo ""
 
 
