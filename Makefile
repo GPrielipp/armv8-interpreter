@@ -12,7 +12,7 @@ OBJS=$(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 SRCDIRS=$(patsubst $(SRCDIR)/%, %, $(shell find $(SRCDIR)/ -type d))
 OBJDIRS=$(SRCDIRS:%=$(OBJDIR)/%)
 
-TARGET=vm
+TARGET=arm
 
 
 
